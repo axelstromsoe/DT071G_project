@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "RmERIzXvlEGN+VOYWQdIM9sMC5+HNQ5JkwFcllnVxsMiDAb81g30lqbC9ka9JgQdDmd0uAFwfNtIl7odY0Y1LA==",
+  "success": true,
+  "projectFilePath": "/Users/axestromsoe/Desktop/DT071G, Programmering i C#.NET/Projekt/DT071G_project/DT071G_project.csproj",
+  "expectedPackageFiles": [
+    "/Users/axestromsoe/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

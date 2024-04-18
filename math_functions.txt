@@ -1,0 +1,5 @@
+Square|x * x
+Cube|x * x * x
+snopp|x * x
+kuken|4 * x
+clit|log(8) * x
