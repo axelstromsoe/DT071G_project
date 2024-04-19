@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace CalculatorSpace
+namespace SOSCalc
 {
     class Tokenizer
     {
@@ -71,6 +71,20 @@ namespace CalculatorSpace
             }
         }
 
+        public string GetNext()
+        {
+            if (currentIndex < tokens.Count() - 2)
+            {
+                // Return the previous token
+                return tokens[currentIndex + 1];
+            }
+            else
+            {
+                // Return the current token if the current index is one
+                return tokens[currentIndex];
+            }
+        }
+
         public bool IsNumber()
         {
             // Get the current token
@@ -106,30 +120,21 @@ namespace CalculatorSpace
             return currentToken == "*EOL*";
         }
 
-        public bool ValidFunction(Dictionary<string, Func<double, double>> validFunctions, Dictionary<string, double> validVariables, string token)
+        public bool Find(string token)
         {
             bool success = false;
+            Reset();
 
+            // Check if the token exists
             while (!IsAtEnd())
             {
-                // Check if the tokenizer contains unvalid functions or variables
-                if (IsName() && GetCurrent() != "x" && !validFunctions.ContainsKey(GetCurrent()) && !validVariables.ContainsKey(GetCurrent()))
-                {
-                    return false;
-                }
-
-                // Check if the tokenizer contains the unknown constant
-                if (GetCurrent() == token)
-                {
-                    success = true;
-                }
+                if (GetCurrent() == token) { success = true; break; }
                 Next();
             }
 
+            Reset();
             return success;
         }
-
-        
 
         public void Replace(string replacementToken)
         {

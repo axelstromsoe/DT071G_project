@@ -15,3 +15,4 @@
 /Users/axestromsoe/Desktop/DT071G, Programmering i C#.NET/Projekt/DT071G_project/bin/Debug/net8.0/Newtonsoft.Json.dll
 /Users/axestromsoe/Desktop/DT071G, Programmering i C#.NET/Projekt/DT071G_project/obj/Debug/net8.0/DT071G_project.csproj.AssemblyReference.cache
 /Users/axestromsoe/Desktop/DT071G, Programmering i C#.NET/Projekt/DT071G_project/obj/Debug/net8.0/DT071G_project.csproj.CopyComplete
+/Users/axestromsoe/Desktop/DT071G, Programmering i C#.NET/Projekt/DT071G_project/obj/Debug/net8.0/DT071G_project.sourcelink.json
