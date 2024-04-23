@@ -142,7 +142,7 @@ namespace SOSCalc
                 // Check if the end of the statement contains a closing parentheses
                 if (tokenizer.GetCurrent() != ")")
                 {
-                    throw new SyntaxException("Expected '(' after function name.");
+                    throw new SyntaxException("Expected ')' at the end of the statement.");
                 }
                 else
                 {
@@ -227,7 +227,7 @@ namespace SOSCalc
             if (function != null)
             {
                 // Create a tokenizer with the function definition
-                Tokenizer tokenizer = new Tokenizer(function.Definition);
+                Tokenizer? tokenizer = new Tokenizer(function.Definition);
 
                 // Parse the function value
                 while (!tokenizer.IsAtEnd())

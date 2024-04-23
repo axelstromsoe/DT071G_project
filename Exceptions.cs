@@ -3,6 +3,14 @@ using System;
 namespace SOSCalc
 {
     // Syntax expetion
+    public class InvalidStatementException : Exception
+    {
+        public InvalidStatementException(string message) : base(message)
+        {
+        }
+    }
+
+    // Syntax expetion
     public class SyntaxException : Exception
     {
         public SyntaxException(string message) : base(message)

@@ -27,14 +27,32 @@ namespace SOSCalc
             // Add a start of line token
             tokens.Add("*SOL*");
 
-            // Add the tokens to the token list
+            int openParentheses = 0;
+            int closeParentheses = 0;
+
+            // Add the tokens to the token list and check the amount of open and close parentheses
             foreach (string token in splitedString)
             {
+                if (token == "(")
+                {
+                    openParentheses++;
+                }
+                else if (token == ")")
+                {
+                    closeParentheses++;
+                }
+
                 tokens.Add(token);
             }
 
             // Add an end of line token
             tokens.Add("*EOL*");
+
+            // Check if the amount of open and close parentheses match
+            if (openParentheses != closeParentheses)
+            {
+                throw new InvalidStatementException("The statement contains unbalanced parentheses.");
+            }
         }
 
         public void Next()

@@ -82,32 +82,40 @@ namespace SOSCalc
                 string input = ReadLine() ?? "";
 
                 // Tokenize the input with the tokenizer class
-                Tokenizer tokenizer = new Tokenizer(input);
+                try
+                {
+                    Tokenizer tokenizer = new Tokenizer(input);
 
-                // Evaluate the given value
-                if (storage.GetProtectedWords().ContainsKey(tokenizer.GetCurrent()))
-                {
-                    return tokenizer.GetCurrent();
-                }
-                else
-                {
-                    // Try to calculate the given input
-                    try
+                    // Evaluate the given value
+                    if (storage.GetProtectedWords().ContainsKey(tokenizer.GetCurrent()))
                     {
-                        // Calculate the result and save it as ans in the math_variables file
-                        double result = calculator.statement(tokenizer);
-                        storage.AddEntry("variable", "ans", result.ToString());
-
-                        // Print the result of the calculation
-                        WriteLine("Output:");
-                        WriteLine(result);
+                        return tokenizer.GetCurrent();
                     }
-                    catch (Exception exception)
+                    else
+                    {
+                        // Try to calculate the given input
+                        try
+                        {
+                            // Calculate the result and save it as ans in the math_variables file
+                            double result = calculator.statement(tokenizer);
+                            storage.AddEntry("variable", "ans", result.ToString());
+
+                            // Print the result of the calculation
+                            WriteLine("Output:");
+                            WriteLine(result);
+                        }
+                        catch (Exception exception)
+                        {
+                            WriteLine(ErrorHeader(exception));
+                            WriteLine(exception.Message);
+                        }
+                    }
+                }
+                catch (Exception exception)
                     {
                         WriteLine(ErrorHeader(exception));
                         WriteLine(exception.Message);
                     }
-                }
             }
         }
 
@@ -513,7 +521,7 @@ namespace SOSCalc
                     // Calculate definition
                     definition = calculator.statement(new Tokenizer(definition)).ToString();
 
-                    // Save function
+                    // Save variable
                     storage.AddEntry("variable", name, definition);
                     WriteLine("\nVariable saved!");
                     quitting = true;
@@ -585,20 +593,23 @@ namespace SOSCalc
 
             switch (exceptionSubClass)
             {
+                case InvalidStatementException:
+                    errorHeader = "\n\u001b[41m ### INVALID STATEMENT ERROR ### \u001b[0m";
+                    break;
                 case SyntaxException:
-                    errorHeader = "\n### SYNTAX ERROR ###";
+                    errorHeader = "\n\u001b[41m ### SYNTAX ERROR ### \u001b[0m";
                     break;
                 case EvaluationException:
-                    errorHeader = "\n### EVALUATION ERROR ###";
+                    errorHeader = "\n\u001b[41m ### EVALUATION ERROR ### \u001b[0m";
                     break;
                 case NotFoundException:
-                    errorHeader = "\n### NOT FOUND ERROR ###";
+                    errorHeader = "\n\u001b[41m ### NOT FOUND ERROR ### \u001b[0m";
                     break;
                 case InvalidNameException:
-                    errorHeader = "\n### INVALID NAME ERROR ###";
+                    errorHeader = "\n\u001b[41m ### INVALID NAME ERROR ### \u001b[0m";
                     break;
                 case InvalidDefinitionException:
-                    errorHeader = "\n### INVALID DEFINITION ERROR ###";
+                    errorHeader = "\n\u001b[41m ### INVALID DEFINITION ERROR ### \u001b[0m";
                     break;
             }
             return errorHeader;
