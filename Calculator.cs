@@ -21,7 +21,7 @@ namespace SOSCalc
         {
             // Reload the json files
             storage.LoadFromFile();
-            
+
             // Call the assignment method
             double result = assignment(tokenizer);
 
@@ -47,7 +47,7 @@ namespace SOSCalc
                 tokenizer.Next();
                 string name = tokenizer.GetCurrent();
 
-                // Assign a value to the given variable name if the name isnt in use
+                // Assign a value to the given variable name if the name is not in use
                 if (!storage.GetProtectedWords().ContainsKey(name))
                 {
                     if (tokenizer.IsName())
@@ -266,6 +266,9 @@ namespace SOSCalc
 
         public bool validateFunctionName(string name)
         {
+            // Reload the storage
+            storage.LoadFromFile();
+
             // Check if the name is an empty string 
             if (name == "")
             {
@@ -301,6 +304,9 @@ namespace SOSCalc
         {
             Tokenizer tokenizer = new Tokenizer(definition);
 
+            // Reload the storage
+            storage.LoadFromFile();
+
             while (!tokenizer.IsAtEnd())
             {
                 string currentToken = tokenizer.GetCurrent();
@@ -316,17 +322,25 @@ namespace SOSCalc
             // Check if the definition use the unknown constant
             if (!tokenizer.Find("x"))
             {
-                throw new InvalidDefinitionException("The function do not containt the unknown constant x.");
+                throw new InvalidDefinitionException("The function do not contain the unknown constant x.");
             }
             return true;
         }
 
         public bool validateVariableName(string name)
         {
+            // Reload the storage
+            storage.LoadFromFile();
+
             // Check if the name is an empty string 
             if (name == "")
             {
                 throw new InvalidNameException("The name cannot be an empty string.");
+            }
+            // Check if the name is already being used
+            else if (storage.VariableExists(name))
+            {
+                throw new InvalidNameException($"{name} is already used for another variable.");
             }
             // Check if the name is a protected word
             else if (storage.GetProtectedWords().ContainsKey(name))
@@ -352,6 +366,9 @@ namespace SOSCalc
         public bool validateVariableDefinition(string definition)
         {
             Tokenizer tokenizer = new Tokenizer(definition);
+
+            // Reload the storage
+            storage.LoadFromFile();
 
             while (!tokenizer.IsAtEnd())
             {

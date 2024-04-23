@@ -1,4 +1,5 @@
 using System;
+using System.Net.WebSockets;
 using SOSCalc;
 using static System.Console;
 
@@ -103,6 +104,7 @@ namespace SOSCalc
                     }
                     catch (Exception exception)
                     {
+                        WriteLine(ErrorHeader(exception));
                         WriteLine(exception.Message);
                     }
                 }
@@ -234,7 +236,7 @@ namespace SOSCalc
                 WriteLine("Create a new function by assign it a name and a definition, use 'x' as the unknown constant.");
                 WriteLine("The name of the function needs to be one continious word, contain letters and be unique. The");
                 WriteLine("definition may use already defined functions and variables native to the system and must contain");
-                WriteLine("the unknown constant 'x' atleast once. Write 'back' in the input field to go back.\n");
+                WriteLine("the unknown constant 'x' atleast once. Write 'back' in the input field to go back.");
 
                 bool validName = false;
                 bool validDefinition = false;
@@ -244,7 +246,7 @@ namespace SOSCalc
                 // Get user input name
                 while (!validName)
                 {
-                    WriteLine("Function name:");
+                    WriteLine("\nFunction name:");
                     name = ReadLine() ?? "";
 
                     // Check if the name is valid
@@ -254,6 +256,7 @@ namespace SOSCalc
                     }
                     catch (Exception exception)
                     {
+                        WriteLine(ErrorHeader(exception));
                         WriteLine(exception.Message);
                     }
 
@@ -267,7 +270,7 @@ namespace SOSCalc
                 // Get the user input definition
                 while (!validDefinition)
                 {
-                    WriteLine("Function definition:");
+                    WriteLine("\nFunction definition:");
                     definition = ReadLine() ?? "";
 
                     // Check if the defintion is valid
@@ -277,6 +280,7 @@ namespace SOSCalc
                     }
                     catch (Exception exception)
                     {
+                        WriteLine(ErrorHeader(exception));
                         WriteLine(exception.Message);
                     }
 
@@ -291,7 +295,7 @@ namespace SOSCalc
                 {
                     // Save function
                     storage.AddEntry("function", name, definition);
-                    WriteLine("Function saved!");
+                    WriteLine("\nFunction saved!");
                     quitting = true;
                 }
             }
@@ -449,7 +453,7 @@ namespace SOSCalc
                 // Write explanation
                 WriteLine("Create a new variables by assign it a name and a definition. The name of the variable needs to be one");
                 WriteLine("continious word, contain letters and be unique. The definition of the variable may use already defined");
-                WriteLine("functions and variables native to the system. Write 'back' in the input field to go back.\n");
+                WriteLine("functions and variables native to the system. Write 'back' in the input field to go back.");
 
                 bool validName = false;
                 bool validDefinition = false;
@@ -459,7 +463,7 @@ namespace SOSCalc
                 // Get user input name
                 while (!validName)
                 {
-                    WriteLine("Variable name:");
+                    WriteLine("\nVariable name:");
                     name = ReadLine() ?? "";
 
                     // Check if the name is valid
@@ -469,6 +473,7 @@ namespace SOSCalc
                     }
                     catch (Exception exception)
                     {
+                        WriteLine(ErrorHeader(exception));
                         WriteLine(exception.Message);
                     }
 
@@ -482,7 +487,7 @@ namespace SOSCalc
                 // Get the user input definition
                 while (!validDefinition)
                 {
-                    WriteLine("Variable definition:");
+                    WriteLine("\nVariable definition:");
                     definition = ReadLine() ?? "";
 
                     // Check if the defintion is valid
@@ -492,6 +497,7 @@ namespace SOSCalc
                     }
                     catch (Exception exception)
                     {
+                        WriteLine(ErrorHeader(exception));
                         WriteLine(exception.Message);
                     }
 
@@ -509,7 +515,7 @@ namespace SOSCalc
 
                     // Save function
                     storage.AddEntry("variable", name, definition);
-                    WriteLine("Variable saved!");
+                    WriteLine("\nVariable saved!");
                     quitting = true;
                 }
             }
@@ -570,6 +576,32 @@ namespace SOSCalc
                     isSelected = true;
                 }
             }
+        }
+
+        // Returns appropriate exeption header depending on the type of exepction
+        private string ErrorHeader(Exception exceptionSubClass)
+        {
+            string errorHeader = "\n### ERROR ###";
+
+            switch (exceptionSubClass)
+            {
+                case SyntaxException:
+                    errorHeader = "\n### SYNTAX ERROR ###";
+                    break;
+                case EvaluationException:
+                    errorHeader = "\n### EVALUATION ERROR ###";
+                    break;
+                case NotFoundException:
+                    errorHeader = "\n### NOT FOUND ERROR ###";
+                    break;
+                case InvalidNameException:
+                    errorHeader = "\n### INVALID NAME ERROR ###";
+                    break;
+                case InvalidDefinitionException:
+                    errorHeader = "\n### INVALID DEFINITION ERROR ###";
+                    break;
+            }
+            return errorHeader;
         }
     }
 }

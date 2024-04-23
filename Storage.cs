@@ -133,7 +133,7 @@ namespace SOSCalc
         public double variableDefinition(string name)
         {
             // Try to get the entry for the given variable name
-            StorageEntry? variable = createdVariables.Find(f => f.Name == name);
+            StorageEntry? variable = createdVariables.Find(v => v.Name == name);
             double definition = 0;
 
             // Check if the wanted variable existsin the createdVariables list
@@ -142,7 +142,7 @@ namespace SOSCalc
                 double.TryParse(variable.Definition, out definition);
             }
             // Check if the wanted variable exists in the nativeVariables dictionary
-            else if (nativeFunctions.ContainsKey(name))
+            else if (nativeVariables.ContainsKey(name))
             {
                 definition = nativeVariables[name];
             }
@@ -192,7 +192,7 @@ namespace SOSCalc
             {
                 case "function":
                     // Try to get the function from createdFunction list
-                    StorageEntry? function = createdFunctions.Find(v => v.Name == name);
+                    StorageEntry? function = createdFunctions.Find(f => f.Name == name);
                     if (function != null)
                     {
                         // Remove the function from the list
@@ -234,7 +234,7 @@ namespace SOSCalc
         // Search for the occurance of a variable name
         public bool VariableExists(string name)
         {
-            StorageEntry? variable = createdVariables.Find(f => f.Name == name);
+            StorageEntry? variable = createdVariables.Find(v => v.Name == name);
             return variable != null || nativeVariables.ContainsKey(name);
         }
     }
